@@ -15,6 +15,14 @@ import Menu from './components/Menu'
 import UserGreeting from './components/userGreeting'
 import ApiTeste from './components/ApiTeste'
 import UsuariosStep from './components/UsuariosStep'
+import FormularioControlado from './components/Aula10/FormularioControlado'
+import FormularioMultiCampos from './components/Aula10/FormularioMultiCampos'
+import Home from './components/Aula11/Home'
+import About from './components/Aula11/About'
+import User from './components/Aula11/User'
+import ButtonNavigate from './components/Aula11/ButtonNavigate'
+import PrivateRoute from './components/Aula11/PrivateRoute'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 
 function App() {
@@ -22,8 +30,23 @@ function App() {
   let nomeUsuario2 = 'Patricia'
   return (
     <>
-        <Saudacao nome="Fabio" sobrenome="mundo"></Saudacao>
-        <UsuariosStep></UsuariosStep>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} /> {/* Aqui ele vai direcionar para home mesmo que vc tentar entrar sem o /home no final da url */}
+          <Route path='/home' element={<Home />} /> {/*O path puxa o Url pq todo site que esta em home nao tem nada ex: apple.com/ 
+            O element é o que vai puxar o component que vc quer*/}
+          <Route path="/about" element={<About />} />
+          <Route path="/user/:id" element={<User />} />{/*aqui ele ta pegando o parametro que é o id, o react sabe que o dois pontos e que vc ta pegando um parametro em outro componente*/}
+          <Route path="/navigate" element={<ButtonNavigate />} />
+           {/* Aqui é uma rota privada para nao conseguir acessar a url novamente estando deslogado do site */}
+           <Route path="/home" element={
+            <PrivateRoute>
+                <Home />
+            </PrivateRoute>
+          }
+        />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
